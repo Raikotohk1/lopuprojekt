@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('participations', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dancer_id');
-            $table->unsignedBigInteger('performance_id');
+            $table->decimal('price', 8, 2); // Assuming 8 digits in total and 2 decimal places
+            $table->date('date');
             $table->timestamps();
 
-            // Foreign key constraints
-            $table->foreign('dancer_id')->references('id')->on('dancers')->onDelete('cascade');
-            $table->foreign('performance_id')->references('id')->on('performances')->onDelete('cascade');
+            // Foreign key constraint
+            $table->foreign('dancer_id')->references('id')->on('dancer')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('participations');
+        Schema::dropIfExists('payments');
     }
 };
